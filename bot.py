@@ -36,7 +36,7 @@ import requests
 setup_name = "default"
 
 try:
-  bot_token = "1235497263:AAEsXmBPJ9vfQwF64Qz3n_sfJQ0VhCaufkI"
+  bot_token = "#"
 
   bot = telebot.TeleBot(bot_token)
 
