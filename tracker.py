@@ -67,8 +67,9 @@ class Amazon:
           if(self.current_price < self.old_price):
             self.old_price = self.current_price
             if self.count == 0:
-              return False
+              return True
             self.count = 1
+            return False
           else:
             return True
 
@@ -166,8 +167,9 @@ class Flipkart:
           if(self.current_price < self.old_price):
             self.old_price = self.current_price
             if self.count == 0:
-              return False
+              return True
             self.count = 1
+            return False
           else:
             return True
 
@@ -181,15 +183,19 @@ def main(url, website):
     obj = Amazon(url)
     check_signal = obj.check_price()
     while(check_signal):
-        print("Again checking")
-        check_signal = obj.check_price()
-        time.sleep(60)
-
+      print("Again checking")
+      check_signal = obj.check_price()
+      time.sleep(3600)
+    print("3600 sec done")
+    
   if website == "flipkart":
     obj = Flipkart(url)
     check_signal = obj.check_price()
+    print(check_signal)
     while(check_signal):
-        check_signal = obj.check_price()
-        time.sleep(120)
+      print("Again checking")
+      check_signal = obj.check_price()
+      time.sleep(3600)
+    print("3600 sec done")
 
   return obj.product

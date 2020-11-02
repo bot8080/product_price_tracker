@@ -75,7 +75,7 @@ def at_answer(message):
       bot.reply_to(message, "Your product price drops down, please check")
       
       for key,value in product.items():
-        s = s + key + " : "+ value + "\n"
+        s = s + str(key) + " : "+ str(value) + "\n"
 
       bot.reply_to(message, s)
 
@@ -87,7 +87,7 @@ def at_answer(message):
       bot.reply_to(message, "Your product price drops down, please check")
 
       for key,value in product.items():
-        s = s + key + " : "+ value + "\n"
+        s = s + str(key) + " : "+ str(value) + "\n"
 
       bot.reply_to(message, s)
 
