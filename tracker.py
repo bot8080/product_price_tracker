@@ -22,35 +22,45 @@ class Amazon:
     user_agent =  random.choice(lines)
 
     self.headers = { 'User-Agent' : user_agent } 
-    print("New Flipkart request with : ", user_agent)
-    response = requests.get(self.url, headers=self.headers)
+    print("New Amazon request with : ", user_agent)
+    response = requests.get(self.url)
+    # response = requests.get(self.url, headers=self.headers)
 
     self.soup = BeautifulSoup(response.content, 'html.parser')
     self.soup.encode('utf-8')
 
     try:
+      #check whether browser version is supported or not
       self.error = self.soup.find("div", {"class": "popup-header"}).text.strip()
       print("Browser is no longer supported")
-    except Exception as be:
-      print("Browser is supported")
-      pass
-      # print(be)
 
-    # f = open("soup.html", "w",encoding= "utf-8")
-    # f.write(str(self.soup))
-    # f.close()
+    except Exception as bb:
+      try:
+        # when browser is supported then check captcha page
+        self.error = self.soup.find("div", {"class": "a-box a-alert a-alert-info a-spacing-base"}).text.strip()
+        print("Browser Captcha error")
+        print("Self.error:",self.error)
+        # print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(bb).__name__, bb)
+      except Exception as bc:
+        print("Browser is supported")
+        # print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(bc).__name__, bc)
+        pass
+      # print(be)
+    
+    f = open("soup.html", "w",encoding= "utf-8")
+    f.write(str(self.soup))
+    f.close()
 
   def check_price(self):
     try:
 
       self.request_with_ua()
-
-      while(self.error=="Your browser is no longer supported"):
-        print("User agent switching")
+      while(self.error=="Your browser is no longer supported" or self.error.startswith("Enter the characters you see below")):
+        print("User agent switching\n")
         self.request_with_ua()
 
       try:
-        print("current price block")
+        # print("current price block")
         self.title = self.soup.find(id= "productTitle").get_text().strip()
         self.current_price = self.soup.find(id = "priceblock_ourprice").get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
       except:
@@ -82,10 +92,11 @@ class Amazon:
 
       except Exception as pqpq:
         print("second end block")
-        print(pqpq)
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(pqpq).__name__, pqpq)
+
     except Exception as qq:
         print("end block")
-        print (qq)
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(qq).__name__, qq)
 
 
     # function that sends an email if the prices fell down
@@ -136,10 +147,13 @@ class Flipkart:
     self.soup.encode('utf-8')
 
     try:
+      #check whether browser version is supported or not
       self.error = self.soup.find("div", {"class": "popup-header"}).text.strip()
       print("Browser is no longer supported")
+
     except Exception as be:
       print("Browser is supported")
+      # print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(be).__name__, be)
       pass
       # print(be)
 
@@ -153,11 +167,11 @@ class Flipkart:
       self.request_with_ua()
 
       while(self.error=="Your browser is no longer supported"):
-        print("User agent switching")
+        print("User agent switching\n")
         self.request_with_ua()
 
       try:
-        print("current price block")
+        # print("current price block")
         self.title = self.soup.find("span", {"class": "_35KyD6"}).text
         self.current_price = self.soup.find("div", {"class": "_1vC4OE _3qQ9m1"}).get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
         # print(self.current_price)
@@ -190,11 +204,11 @@ class Flipkart:
 
       except Exception as qq:
         print("second end block")
-        print(qq)
+        print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(qq).__name__, qq)
 
     except Exception as ww:
       print("end block")
-      print(ww)
+      print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(ww).__name__, ww)
 
 
 

@@ -18,9 +18,6 @@ except Exception as pp:
 print("BOT STARTED")
 
 def Find(string): 
-  
-    # findall() has been used  
-    # with valid conditions for urls in string 
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
     url = re.findall(regex,string)       
     return [x[0] for x in url] 
@@ -59,12 +56,11 @@ def at_answer(message):
   s = ""
   try:
     input_value = message.text.strip()
-    print("\n \nNEW Link request ")
+    print("###########################################################\nNEW Link request ")
     # print(input_value)
 
     url = Find(input_value)[0]
     # print("AFTER PARSING")
-
 
     if url.startswith("https://www.amazon.in/"):
       new_obj = tracker.Amazon(url)
@@ -108,7 +104,7 @@ while True:
     bot.polling()
   except Exception as ee:
     print("POLLING")
-    print(ee)
+    print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(ee).__name__, ee)
     pass
     # time.sleep(15)
 
