@@ -59,38 +59,38 @@ def at_answer(message):
   s = ""
   try:
     input_value = message.text.strip()
-    print("\n \nNEW Request ")
+    print("\n \nNEW Link request ")
     # print(input_value)
 
     url = Find(input_value)[0]
     # print("AFTER PARSING")
 
-    # print(url)
 
     if url.startswith("https://www.amazon.in/"):
-      # print("Is is Valid amazon link")
-      # url = "https://dl.flipkart.com/dl/realme-narzo-20-pro-black-ninja-64-gb/p/itm043c480bf22fb?pid=MOBFVEATWGRHFRJ9&cmpid=product.share.pp"
+      new_obj = tracker.Amazon(url)
+      product = new_obj.check_price()
+
+      bot.reply_to(message, product)
+      bot.reply_to(message, "Feel free, I will check the product price every hour and then I will notify you when the current price drops down!!!.")
+
       product = tracker.main(url, "amazon")
-
-      bot.reply_to(message, "Your product price drops down, please check")
       
-      for key,value in product.items():
-        s = s + str(key) + " : "+ str(value) + "\n"
-
-      bot.reply_to(message, s)
+      bot.reply_to(message, "Your product price drops down, please check")
+      bot.reply_to(message, product)
 
     elif url.startswith("https://dl.flipkart.com/dl/") or url.startswith("https://www.flipkart.com/"):
-      # print("VALID flipkart link")
-      # url = "https://dl.flipkart.com/dl/realme-narzo-20-pro-black-ninja-64-gb/p/itm043c480bf22fb?pid=MOBFVEATWGRHFRJ9&cmpid=product.share.pp"
+      new_obj = tracker.Flipkart(url)
+      product = new_obj.check_price()
+
+      bot.reply_to(message, product)
+      bot.reply_to(message, "Feel free, I will check the product price every hour and then I will notify you when the current price drops down!!!.")
+
       product = tracker.main(url, "flipkart")
-
+      
       bot.reply_to(message, "Your product price drops down, please check")
+      bot.reply_to(message, product)
 
-      for key,value in product.items():
-        s = s + str(key) + " : "+ str(value) + "\n"
-
-      bot.reply_to(message, s)
-
+      
     elif url.startswith("https://www.amazon.com/"):
       bot.reply_to(message, "Please send www.amazon.in link, www.amazon.com not supoorted yet " )
 
