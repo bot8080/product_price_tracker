@@ -51,16 +51,16 @@ class Amazon:
 
       try:
         print("current price block")
-        self.title = soup.find(id= "productTitle").get_text().strip()
-        self.current_price = soup.find(id = "priceblock_ourprice").get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
+        self.title = self.soup.find(id= "productTitle").get_text().strip()
+        self.current_price = self.soup.find(id = "priceblock_ourprice").get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
       except:
-        print("self.current_price exception")
-        self.current_price = soup.find(id = "priceblock_dealprice").get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
+        print("Its a special deal price")
+        self.current_price = self.soup.find(id = "priceblock_dealprice").get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
 
       try:  
         self.current_price = int(self.current_price.split(".")[0])
-        self.review_count = soup.find(id="acrCustomerReviewText").get_text().split()[0]
-        self.stars = soup.find(id = "acrPopover").get_text().strip()
+        self.review_count = self.soup.find(id="acrCustomerReviewText").get_text().split()[0]
+        self.stars = self.soup.find(id = "acrPopover").get_text().strip()
 
         try:
           self.product_dict = {'Product Name': self.title, 'price': self.current_price, 'stars':self.stars, 'Number of reviews': self.review_count}
@@ -68,7 +68,7 @@ class Amazon:
           self.product_dict = {'Product Name': self.title, 'price': self.current_price, 'stars':"Unable to fetch", 'Number of reviews': "Unable to fetch"}
 
         for key,value in self.product_dict.items():
-          product_details = product_details + str(key) + " : "+ str(value) + "\n"
+          self.product_details = self.product_details + str(key) + " : "+ str(value) + "\n"
         # print(json.dumps(jsonObject, indent=2))
 
         if(self.current_price < self.old_price):
@@ -202,6 +202,7 @@ def main(url, website):
   if website == "amazon":
     obj = Amazon(url)
     check_signal = obj.check_price()
+    print(check_signal)
     while(check_signal):
       print("Again checking")
       check_signal = obj.check_price()
