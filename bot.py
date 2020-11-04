@@ -34,21 +34,9 @@ def restart(message):
     bot.reply_to(message, "Program started again")
 
 
-# @bot.message_handler(commands=['search'])
-# def search(message):
-#     try:
-#       res = requests.get('http://d.yimg.com/autoc.finance.yahoo.com/autoc?query='+message.text.split(" ", 1)[1]+'&lang=en')
-#       bot.reply_to(message, res.json()['ResultSet']['Result'][0]['symbol'])
-#     except Exception as ee:
-#       print(ee)
-#       bot.reply_to(message, "Company da naam is tarah likho /search apple")
-#       pass
-
-
-
 @bot.message_handler(commands=['help'])
 def send_help(message):
-  bot.reply_to(message, "1. Select your product from amazon/flipkart website or application \n2. Share product link from application to this bot\n3. Set your desired amount")
+  bot.reply_to(message, "1. Select your product from amazon.in/flipkart website or application \n2. Share product link from application to this bot")
 
 
 @bot.message_handler(func=lambda msg: msg.text is not None)
