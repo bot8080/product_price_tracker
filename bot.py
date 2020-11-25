@@ -7,7 +7,7 @@ import tracker
 
 
 try:
-  bot_token = "1492010823:AAFjY_4sCYjOmffnKykQU5luZVP1Q0eVDuI"
+  bot_token = "1492010723:AAFjY_4sCYjOmffnKykQU5luZVP1Q0eVDuI"
 
   bot = telebot.TeleBot(bot_token)
 

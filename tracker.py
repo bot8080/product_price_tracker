@@ -23,6 +23,7 @@ class Amazon:
 
     self.headers = { 'User-Agent' : user_agent } 
     print("New Amazon request with : ", user_agent)
+    
     response = requests.get(self.url)
     # response = requests.get(self.url, headers=self.headers)
 
@@ -213,24 +214,27 @@ class Flipkart:
 
 
 def main(url, website):
-  if website == "amazon":
-    obj = Amazon(url)
-    check_signal = obj.check_price()
-    print(check_signal)
-    while(check_signal):
-      print("Again checking")
+  try:
+    if website == "amazon":
+      obj = Amazon(url)
       check_signal = obj.check_price()
-      time.sleep(3600)
-    print("3600 sec done")
-    
-  if website == "flipkart":
-    obj = Flipkart(url)
-    check_signal = obj.check_price()
-    print(check_signal)
-    while(check_signal):
-      print("Again checking")
+      while(check_signal):
+        print("\nAgain checking")
+        print(check_signal)
+        check_signal = obj.check_price()
+        time.sleep(10)
+      print("3600 sec done")
+      
+    if website == "flipkart":
+      obj = Flipkart(url)
       check_signal = obj.check_price()
-      time.sleep(3600)
-    print("3600 sec done")
+      while(check_signal):
+        print("Again checking")
+        print(check_signal)
+        check_signal = obj.check_price()
+        time.sleep(10)
+      print("3600 sec done")
 
-  return obj.product_details
+    return obj.product_details
+  except Exception as E:
+    print(E)
